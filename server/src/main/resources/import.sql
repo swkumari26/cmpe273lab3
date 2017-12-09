@@ -1,0 +1,2 @@
+--insert into USER (firstName,lastName,email,password) values ('user1fn','user1ln','user1@gmail.com','user1');
+--insert into CONTENT(contentPath,contentName,rootFolder,createdBy) values ('1/test','test','1','1');
