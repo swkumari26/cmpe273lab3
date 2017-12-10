@@ -11,7 +11,7 @@ public class Content {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private Integer rootFolder;
+    private String rootFolder;
     private String contentPath;
     private String contentName;
     private String createdBy;
@@ -22,11 +22,11 @@ public class Content {
         createdOn = new Date();
     }
 
-    public Integer getRootFolder() {
+    public String getRootFolder() {
         return rootFolder;
     }
 
-    public void setRootFolder(Integer rootFolder) {
+    public void setRootFolder(String rootFolder) {
         this.rootFolder = rootFolder;
     }
 

@@ -6,6 +6,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ContentRepository extends CrudRepository<Content,Long> {
+public interface ContentRepository extends CrudRepository<Content,Integer> {
     Iterable<Content> findByRootFolder(@Param("rootFolder") Integer rootFolder);
 }
