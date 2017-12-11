@@ -4,7 +4,7 @@ import {Table} from 'reactstrap';
 
 export default class Content extends Component {
 render(){
-  const{files,token,selectedName,user,tree} = this.props;
+  const{files,selectedName,user,tree,sideBarOption} = this.props;
   console.log("files in content:",files);
   return(
     <div>
@@ -13,7 +13,7 @@ render(){
         return(
           <div>
           {
-            <ContentItem name={contentItem} parentpath={files} files={tree[contentItem]} user={user} token={token}/>
+            <ContentItem name={contentItem} parentpath={files} files={tree[contentItem]} user={user} sideBarOption={sideBarOption}/>
           }
           </div>
           );

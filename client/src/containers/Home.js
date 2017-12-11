@@ -37,7 +37,10 @@ console.log("tree in home is:",tree)
   }   
   else
   {
+    if(tree[user.id])
     files = tree[user.id];
+    else
+      files = tree.root;
     console.log("files in home",files); 
   }
 }
@@ -50,8 +53,10 @@ if(user){username= user.lastName+','+user.firstName;}
   <ul className="nav navbar-nav pull-left">
     <li><a href="#home"><i className="fa fa-home"></i><span> <img src="https://cfl.dropboxstatic.com/static/images/favicon-vflk5FiAC.ico"></img> </span></a></li>
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/home'); }}><h4>Home </h4></Link></li>
+   <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/shared'); }}><h4>Shared Files </h4></Link></li>
+   <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/group'); }}><h4>Groups</h4></Link></li>
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/log'); }}><h4>Activity Log </h4></Link></li>
-   <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+   <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
   </ul>
   </div>
   </div>
@@ -62,7 +67,7 @@ if(user){username= user.lastName+','+user.firstName;}
   <br/><br/>
   <Header pageName="Home" userName={username} token={token}/>
   <br/><br/>
-    <Body files={files} tree={tree} token={token} user={user}/>
+    <Body files={files} tree={tree} sideBarOption="/home/" user={user}/>
   </div>
   </div>
       )

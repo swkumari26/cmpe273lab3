@@ -32,18 +32,15 @@ public class ContentController {
     @Autowired
     ContentService contentService;
     @GetMapping(path="/{rootFolder}")
-    public @ResponseBody Iterable<String> getContens(@PathVariable String rootFolder){
-            String absolutePath = new File("dropbox").getPath();
-            File root = new File(absolutePath,rootFolder);
-            System.out.println("result is:"+contentService.listDir(root));
-            return contentService.listDir(root);
+    public @ResponseBody Iterable<Content> getContents(@PathVariable String rootFolder){
+            return contentService.listDir(rootFolder);
     }
     @PostMapping(path = "/createFolder", consumes = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createFolder(@RequestBody Content content){
         String folderPath=content.getContentPath();
         String absolutePath = new File("dropbox").getPath()+'/'+folderPath;
         if(contentService.createDir(new File(absolutePath),content))
-            return new ResponseEntity(null, HttpStatus.CREATED);
+            return new ResponseEntity(contentService.listDir(content.getRootFolder()), HttpStatus.CREATED);
         else
             return new ResponseEntity<Error>(HttpStatus.CONFLICT);
     }
@@ -51,22 +48,32 @@ public class ContentController {
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> deleteContent(@PathVariable String id){
         String contentPath = contentService.getById(Integer.parseInt(id)).getContentPath();
+        String rootFolder = contentService.getById(Integer.parseInt(id)).getRootFolder();
         String absolutePath = new File("dropbox").getPath()+'/'+contentPath;
         if(contentService.deleteContent(new File(absolutePath))) {
             contentService.deleteCon(Integer.parseInt(id));
-            return new ResponseEntity(null, HttpStatus.OK);
+            return new ResponseEntity(contentService.listDir(rootFolder),HttpStatus.OK);
         }
         else
             return new ResponseEntity<Error>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/upload") // //new annotation since 4.3
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<?> starContent(@PathVariable String id){
+        String rootFolder = contentService.getById(Integer.parseInt(id)).getRootFolder();
+        if(contentService.markStar(Integer.parseInt(id)))
+            return new ResponseEntity(contentService.listDir(rootFolder),HttpStatus.OK);
+        else
+            return new ResponseEntity<Error>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/upload")
     public ResponseEntity<?> fileUpload(@RequestParam("path") String path,
                                         @RequestParam("rootFolder") String rootFolder,
                                         @RequestParam("createdBy") String createdBy,
                                         @RequestParam("file") MultipartFile file) {
         if(contentService.uploadFile(path,rootFolder,createdBy,file))
-            return new ResponseEntity(null, HttpStatus.CREATED);
+            return new ResponseEntity(contentService.listDir(rootFolder),HttpStatus.CREATED);
         else
             return new ResponseEntity<Error>(HttpStatus.CONFLICT);
     }

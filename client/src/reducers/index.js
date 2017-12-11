@@ -5,7 +5,6 @@ import { reducer as formReducer } from 'redux-form'
 const initialState = {
     token: null,
     isAuthenticated: false,
-    isAuthenticating: false,
     statusText: null,
     user:[],
     result: [],
@@ -22,21 +21,14 @@ const login = (state = initialState, action) => {
         case LOGIN_USER_REQUEST:
         return{
             ...state,
-            'isAuthenticating': true,
             'statusText': null
         };
         case LOGIN_USER_SUCCESS:        
         return{
             ...state,
-            // 'token': [action.token],
             'isAuthenticated': true,
-            'isAuthenticating': false,
             'statusText': 'You have been successfully logged in.',
             'user':action.user
-            // 'result':[action.result][0],
-            // 'tree':[action.tree][0],
-            // 'log':[action.log][0],
-            // 'star':[action.star][0]
         };
         case USER_CONTENT_SUCCESS:        
         return{
@@ -48,8 +40,8 @@ const login = (state = initialState, action) => {
             // 'user':action.user
             // 'result':[action.result][0],
             'tree':action.tree,
-            // 'log':[action.log][0],
-            // 'star':[action.star][0]
+            'log':action.log,
+            'star':action.star
         };        
         case SIGNUP_USER_SUCCESS:        
         return{
@@ -90,7 +82,7 @@ const login = (state = initialState, action) => {
         case QUERY_SUCCESS:        
         return{
             ...state,
-            'accounts':[action.accounts][0]
+            'accounts':action.accounts
         };                            
         default :
             return state;            

@@ -12,28 +12,31 @@ import {Link}  from 'react-router-dom'
 
 class Body extends Component { 
    handleFileUpload = (event) => {
+        var contentPath,rootFolder;
         const file = new FormData();
-        if (this.props.files.content_path){
-        var content_path = this.props.files.content_path+'/';
+        if (this.props.files.contentPath){
+          contentPath = this.props.files.contentPath;
+          rootFolder = this.props.files.rootFolder;
       }
       else{
-        var content_path = this.props.user.id+'/'+this.props.files.absolute_path;
+          contentPath = '/'+this.props.user.id;
+          rootFolder = this.props.user.id;
       }
-        var absolute_path = this.props.files.absolute_path;
-        file.append('path', content_path);
-        file.append('absolutepath', absolute_path);
-        file.append('myfile', event.target.files[0]);
-        this.props.uploadFile(file,this.props.token);
+        file.append('path', contentPath);
+        file.append('file', event.target.files[0]);
+        file.append('createdBy', this.props.user.id);
+        file.append('rootFolder', rootFolder);
+        this.props.uploadFile(file);
     };
 render(){
-  const{uploadFile,files,user,token,tree} = this.props; 
+  const{uploadFile,files,user,token,tree,sideBarOption} = this.props; 
     console.log("files in body",files); 
   return(
     <div className="row">
     <div className="col-lg-9">
     {
     (Object.keys(files).length===0)?" ":     
-      (<Content files={files} tree={tree} token={token} user={user}/>)
+      (<Content files={files} tree={tree} sideBarOption={sideBarOption} user={user}/>)
     }
     </div>
   <div className="col-lg-3">

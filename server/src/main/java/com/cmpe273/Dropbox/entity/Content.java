@@ -4,6 +4,7 @@ package com.cmpe273.Dropbox.entity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 
 @Entity
@@ -44,6 +45,14 @@ public class Content {
 
     public void setContentName(String contentName) {
         this.contentName = contentName;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCreatedBy() {
