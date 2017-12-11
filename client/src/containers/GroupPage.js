@@ -3,20 +3,21 @@ import { connect } from 'react-redux'
 import history from '../history';
 import LoginComponent from '../components/Login1'
 import Header from '../components/Header'
-import {fetchGroupContent} from '../actions/index';
+import {fetchUserContent} from '../actions/index';
 import Body from '../components/Body'
 import { bindActionCreators } from 'redux';
 import {Link}  from 'react-router-dom'
 class Shared extends Component {
         componentWillMount () {
-            this.checkAuth(this.props.isAuthenticated);
+            // this.checkAuth(this.props.isAuthenticated);
         }
 
-        componentWillReceiveProps (nextProps) {
-            this.checkAuth(nextProps.isAuthenticated);
+        componentWillReceiveProps(nextProps) {
+            // this.checkAuth(nextProps.isAuthenticated);
         }
         componentDidMount(){
-            this.props.fetchGroupContent(this.props.user.id);
+          if(!this.props.match.path.includes('groupPage'))
+            this.props.fetchUserContent(this.props.match.params.folder);
         }
         checkAuth (isAuthenticated) {
             if (!isAuthenticated) {
@@ -35,14 +36,6 @@ console.log("tree in group is:",tree)
     files = tree[this.props.match.params.folder];
     console.log("files in home",files); 
   }   
-  else
-  {
-    if(tree[user.id])
-    files = tree[user.id];
-    else
-      files = tree.root;
-    console.log("files in home",files); 
-  }
 }
 let username;
 if(user){username= user.lastName+','+user.firstName;}
@@ -56,7 +49,7 @@ if(user){username= user.lastName+','+user.firstName;}
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/shared'); }}><h4>Shared Files</h4></Link></li>
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/group'); }}><h4>Groups</h4></Link></li>
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/log'); }}><h4>Activity Log </h4></Link></li>
-   <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+   <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
   </ul>
   </div>
   </div>
@@ -65,9 +58,9 @@ if(user){username= user.lastName+','+user.firstName;}
           <h4>{statusText}</h4>
         </div> 
   <br/><br/>
-  <Header pageName="Groups" userName={username}/>
+  <Header pageName="Group content" userName={username}/>
   <br/><br/>
-    <Body files={files} tree={tree} user={user} sideBarOption="/group/groupPage"/>
+    <Body files={files} tree={tree} user={user} sideBarOption="/group/groupPage/"/>
   </div>
   </div>
       )
@@ -83,7 +76,7 @@ if(user){username= user.lastName+','+user.firstName;}
   }
   function mapDispatchToProps(dispatch) {
     return {
-        ...bindActionCreators({fetchGroupContent},dispatch)
+        ...bindActionCreators({fetchUserContent},dispatch)
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Shared); 

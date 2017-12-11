@@ -9,18 +9,23 @@ render(){
   return(
     <div>
     {
-      files.files.map((contentItem)=>{
-        return(
-          <div>
-          {
-            <ContentItem name={contentItem} parentpath={files} files={tree[contentItem]} user={user} sideBarOption={sideBarOption}/>
-          }
-          </div>
-          );
+      files?
+      <div>
+      {
+        files.files.map((contentItem)=>{
+          return(
+            <div>
+            {
+              <ContentItem name={contentItem} parentpath={files} files={tree[contentItem]} user={user} sideBarOption={sideBarOption}/>
+            }
+            </div>
+            );
+        }
+      )
       }
-    )
+      </div>:''
     }
-    </div>
+    </div>    
   	);	
 }
 }

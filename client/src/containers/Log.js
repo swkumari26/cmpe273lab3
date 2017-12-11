@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import history from '../history';
 import LoginComponent from '../components/Login1'
 import Header from '../components/Header'
+import {fetchUserContent} from '../actions/index';
 import LogBody from '../components/LogBody'
 import { bindActionCreators } from 'redux';
 import {Link}  from 'react-router-dom'
@@ -14,7 +15,9 @@ class Log extends Component {
         componentWillReceiveProps (nextProps) {
             this.checkAuth(nextProps.isAuthenticated);
         }
-
+        componentDidMount(){
+            this.props.fetchUserContent(this.props.user.id);
+        }
         checkAuth (isAuthenticated) {
             if (!isAuthenticated) {
              history.push('/');
@@ -34,7 +37,7 @@ if(user){username= user.lastname+','+user.firstname;}
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/shared'); }}><h4>Shared Files</h4></Link></li>
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/group'); }}><h4>Groups</h4></Link></li>
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/log'); }}><h4>Activity Log </h4></Link></li>
-   <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+   <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
   </ul>
   </div>
   </div>
@@ -64,4 +67,9 @@ if(user){username= user.lastname+','+user.firstname;}
         statusText:state.login.statusText
     }
     }
-export default connect(mapStateToProps, null)(Log); 
+  function mapDispatchToProps(dispatch) {
+    return {
+        ...bindActionCreators({fetchUserContent},dispatch)
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Log); 

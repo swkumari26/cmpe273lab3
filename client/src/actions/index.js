@@ -194,7 +194,7 @@ export function fetchGroupContent(id){
             .then(parseJSON)
             .then(response => {
                 try {
-                    dispatch(userContentSuccess(response,true));                  
+                    dispatch(userContentSuccess(response));                  
                 } catch (e) {
                     dispatch(loginUserFailure({
                         response: {

@@ -14,12 +14,6 @@ import { Route } from 'react-router-dom'
 const store = configureStore()
 
 export default class Root extends Component {	
-  componentDidMount(){
-    let token = localStorage.getItem('token');
-    if (token !== null) {
-      store.dispatch(loginRefresh(token));
-    }  
-  }
   render() { 	
     return (
       <Provider store={store}>

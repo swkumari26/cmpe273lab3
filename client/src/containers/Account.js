@@ -35,9 +35,8 @@ if(user){username= user.lastName+','+user.firstName;}
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/home'); }}><h4>Home </h4></Link></li>
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/shared'); }}><h4>Shared Files </h4></Link></li>
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/group'); }}><h4>Groups</h4></Link></li>
-   <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/group'); }}><h4>Groups</h4></Link></li>
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/log'); }}><h4>Activity Log </h4></Link></li>
-   <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+   <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
           </ul>
       </div>
       </div>
@@ -76,14 +75,14 @@ if(user){username= user.lastName+','+user.firstName;}
       </div>
     <div className="col-lg-6 col-md-6 col-sm-6">
       <div className="jumbotron">Life events</div>
-      <h5>Number of content created {user.no_content_created} </h5>
-      <h5>Number of content deleted {user.no_content_deleted} </h5>
-      <h5>Number of content shared {user.no_content_shared} </h5>
+      <h5>Number of content created {user.noContentCreated} </h5>
+      <h5>Number of content deleted {user.noContentDeleted} </h5>
+      <h5>Number of content shared {user.noContentShared} </h5>
       <PieChart radius='25'
       data={[
-      { value: user.no_content_created, key: 1, color: '#E38627' },
-      { value: user.no_content_deleted, key: 2, color: '#C13C37' },
-      { value: user.no_content_shared, key: 3, color: '#6A2135' },
+      { value: user.noContentCreated, key: 1, color: '#E38627' },
+      { value: user.noContentDeleted, key: 2, color: '#C13C37' },
+      { value: user.noContentShared, key: 3, color: '#6A2135' },
       ]}
       />    
     </div> 

@@ -13,6 +13,7 @@ import java.util.List;
 public interface ContentRepository extends CrudRepository<Content,Integer> {
     Iterable<Content> findByRootFolder(@Param("rootFolder") Integer rootFolder);
     List<Content> findByContentPathIn(@Param("contentPath") List<String> contentPathList);
+    List<Content> findByRootFolderIn(@Param("rootFolder") List<String> rootFolderList);
     List<Content> findByIdIsIn(@Param("id") List<Integer> idList);
     @Modifying(clearAutomatically = true)
     @Transactional

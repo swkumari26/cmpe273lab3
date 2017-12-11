@@ -2,6 +2,7 @@ package com.cmpe273.Dropbox.controller;
 
 import com.cmpe273.Dropbox.entity.Content;
 import com.cmpe273.Dropbox.service.ContentService;
+import com.cmpe273.Dropbox.service.UserService;
 import org.springframework.core.io.FileSystemResource;
 import com.sun.net.httpserver.Authenticator;
 import com.sun.xml.internal.fastinfoset.stax.events.EmptyIterator;
@@ -31,6 +32,8 @@ import java.util.Collections;
 public class ContentController {
     @Autowired
     ContentService contentService;
+    @Autowired
+    UserService userService;
     @GetMapping(path="/{rootFolder}")
     public @ResponseBody Iterable<Content> getContents(@PathVariable String rootFolder){
             return contentService.listDir(rootFolder);
@@ -39,8 +42,10 @@ public class ContentController {
     public ResponseEntity<?> createFolder(@RequestBody Content content){
         String folderPath=content.getContentPath();
         String absolutePath = new File("dropbox").getPath()+'/'+folderPath;
-        if(contentService.createDir(new File(absolutePath),content))
+        if(contentService.createDir(new File(absolutePath),content)) {
+            userService.contentCreatedCount(content.getCreatedBy());
             return new ResponseEntity(contentService.listDir(content.getRootFolder()), HttpStatus.CREATED);
+        }
         else
             return new ResponseEntity<Error>(HttpStatus.CONFLICT);
     }
@@ -52,6 +57,7 @@ public class ContentController {
         String absolutePath = new File("dropbox").getPath()+'/'+contentPath;
         if(contentService.deleteContent(new File(absolutePath))) {
             contentService.deleteCon(Integer.parseInt(id));
+//            userService.contentDeletedCount(contentService.getById(Integer.parseInt(id)).getCreatedBy());
             return new ResponseEntity(contentService.listDir(rootFolder),HttpStatus.OK);
         }
         else

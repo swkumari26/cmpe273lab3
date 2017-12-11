@@ -37,10 +37,7 @@ console.log("tree in group is:",tree)
   }   
   else
   {
-    if(tree[user.id])
-    files = tree[user.id];
-    else
-      files = tree.root;
+      files = tree['dropbox'];
     console.log("files in home",files); 
   }
 }
@@ -56,7 +53,7 @@ if(user){username= user.lastName+','+user.firstName;}
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/shared'); }}><h4>Shared Files</h4></Link></li>
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/group'); }}><h4>Groups</h4></Link></li>
    <li><Link to="" onClick={(e) => {e.preventDefault(); history.push('/log'); }}><h4>Activity Log </h4></Link></li>
-   <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+   <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
   </ul>
   </div>
   </div>

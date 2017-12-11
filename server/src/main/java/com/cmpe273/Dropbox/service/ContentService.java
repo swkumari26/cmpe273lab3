@@ -19,6 +19,8 @@ import java.io.File;
 public class ContentService {
     @Autowired
     private ContentRepository contentRepository;
+    @Autowired
+    private UserService userService;
     public Iterable<Content> getByRootFolder(Integer rootFolder){
         return contentRepository.findByRootFolder(rootFolder);
     }
@@ -76,7 +78,6 @@ public class ContentService {
                 }
             }
         }
-        contentPath.setWritable(true);
         return(contentPath.delete());
     }
     public Boolean uploadFile(String path,String rootFolder,String createdBy,MultipartFile file){
@@ -93,7 +94,7 @@ public class ContentService {
                 content.setContentPath(pathWithName);
                 content.setRootFolder(rootFolder);
                 content.setContentName(file.getOriginalFilename());
-                content.setCreatedBy(createdBy);
+                content.setCreatedBy(Integer.parseInt(createdBy));
                 content.setCreatedOn(new Date());
                 content.setStar(false);
                 contentRepository.save(content);
@@ -107,5 +108,8 @@ public class ContentService {
             return true;
         else
             return false;
+    }
+    public List<Content> getByRootFolderIn(List<String> rootFolderList){
+        return contentRepository.findByRootFolderIn(rootFolderList);
     }
 }

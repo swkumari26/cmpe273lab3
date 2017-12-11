@@ -15,12 +15,23 @@ public class Content {
     private String rootFolder;
     private String contentPath;
     private String contentName;
-    private String createdBy;
+    private Integer createdBy;
     private Date createdOn;
     private Boolean star;
     @PrePersist
     protected void onCreate(){
         createdOn = new Date();
+    }
+
+    public Content(String rootFolder, String contentPath, String contentName, Integer createdBy, Boolean star) {
+        this.rootFolder = rootFolder;
+        this.contentPath = contentPath;
+        this.contentName = contentName;
+        this.createdBy = createdBy;
+        this.star = star;
+    }
+
+    public Content() {
     }
 
     public String getRootFolder() {
@@ -55,11 +66,11 @@ public class Content {
         this.id = id;
     }
 
-    public String getCreatedBy() {
+    public Integer getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(Integer createdBy) {
         this.createdBy = createdBy;
     }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FolderIcon from 'react-icons/lib/md/folder';
-import GroupIcon from 'react-icons/lib/fa/group';
+import GroupIcon from 'react-icons/lib/md/group';
 import FileIcon from 'react-icons/lib/go/file-text';
 import PdfIcon from 'react-icons/lib/fa/file-pdf-o';
 import StarIcon from 'react-icons/lib/fa/star';
@@ -18,6 +18,7 @@ class ContentItem extends Component {
         super(props)
         this.state = {
               modalIsOpen:false,
+              share:true,
               content:{
                   rootFolder:null,
                   contentPath:null,
@@ -51,7 +52,7 @@ class ContentItem extends Component {
       }                
 render(){  
   const{user,name,parentpath,files,sideBarOption,deleteContent,shareContent,starContent,accounts,getAccounts} = this.props;
-  const{modalIsOpen} = this.state;
+  const{modalIsOpen,share} = this.state;
   let displayIcon,buttonOptions
   let link = sideBarOption+name;
   let pathWithName,createdOn;
@@ -116,13 +117,19 @@ render(){
       else{
         if(sideBarOption=='/group/')
         displayIcon = (
-        <Link to="" onClick={(e) => {e.preventDefault(); history.push(link); }}><GroupIcon size={50}/><span>{name}    </span></Link>
+        <Link to="" onClick={(e) => {e.preventDefault(); history.push(link); }}><GroupIcon size={50}/><span>&nbsp;&nbsp;{name}    </span></Link>
         )
         else
         displayIcon = (
         <Link to="" onClick={(e) => {e.preventDefault(); history.push(link); }}><FolderIcon size={50}/><span>{name}    </span></Link>
         )        
       }
+      if(sideBarOption=='/group/')
+        buttonOptions = (<div>          
+          <button className="btn btn-default btn-sm" onClick={(e) => {e.preventDefault(); getAccounts();this.setState({modalIsOpen:true,share:false});} }>Add members</button>
+          </div>
+          ) 
+      else
         buttonOptions = (<div>
           <button className="btn btn-default btn-sm" onClick={(e) => {e.preventDefault();getAccounts();this.setState({modalIsOpen:true});}}>Share</button>
           {
@@ -160,7 +167,7 @@ render(){
     <Modal 
       isOpen={modalIsOpen} 
       contentLabel='Modal'
-      style={{overlay:{},content:{bottom:"50%",left:"30%",right:"30%",border:"2px solid #ccc"}}}       
+      style={{overlay:{},content:{bottom:"50%",left:"20%",right:"40%",border:"2px solid #ccc"}}}       
       >
     <div className="modal-text">
     {displayIcon}<button className="close" onClick={(e) => {e.preventDefault();this.setState({modalIsOpen:false});}}><span aria-hidden={true}>&times;</span></button>
@@ -175,9 +182,19 @@ render(){
     }
     </datalist>
     <hr/>
-    <Link to="">Create link to share</Link>
-    <hr/>
+    <div>
+    {
+    (share)?
+    <Link to="">Create link to share</Link>:''
+    }
+    </div>
+    <div>
+    {
+     (share)? 
     <button className="btn btn-primary" onClick={(e) => {e.preventDefault();shareContent(this.input.value,accounts,files.contentId,user.id);this.setState({modalIsOpen:false});}}>Share</button>
+    :<button className="btn btn-primary" onClick={(e) => {e.preventDefault();shareContent(this.input.value,accounts,files.contentId,user.id);this.setState({modalIsOpen:false});}}>Add member</button>
+    }
+    </div>
     </div>
     </Modal>
     </div>   

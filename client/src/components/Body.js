@@ -35,7 +35,7 @@ render(){
     <div className="row">
     <div className="col-lg-9">
     {
-    (Object.keys(files).length===0)?" ":     
+    (files&&Object.keys(files).length===0)?" ":     
       (<Content files={files} tree={tree} sideBarOption={sideBarOption} user={user}/>)
     }
     </div>

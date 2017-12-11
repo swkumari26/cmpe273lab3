@@ -46,6 +46,15 @@ public class SharedContent {
         return sharedToId;
     }
 
+    public SharedContent(Integer sharedToId, Integer sharedById, Integer contentId) {
+        this.sharedToId = sharedToId;
+        this.sharedById = sharedById;
+        this.contentId = contentId;
+    }
+
+    public SharedContent() {
+    }
+
     public void setSharedToId(Integer sharedToId) {
         this.sharedToId = sharedToId;
     }

@@ -17,8 +17,11 @@ public class SharedContentService {
     private SharedContentRepository sharedContentRepository;
     @Autowired
     private ContentService contentService;
+    @Autowired
+    private UserService userService;
     public boolean modifySharedContent(SharedContent sharedContent){
         sharedContentRepository.save(sharedContent);
+        userService.contentSharedCount(sharedContent.getSharedById());
         return true;
     }
 

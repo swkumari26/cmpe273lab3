@@ -1,9 +1,6 @@
 package com.cmpe273.Dropbox.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
@@ -14,6 +11,48 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    private Integer noContentCreated;
+    private Integer noContentDeleted;
+    private Integer noContentShared;
+    @PrePersist
+    protected void onCreate(){
+        noContentCreated = 0;
+        noContentDeleted = 0;
+        noContentShared = 0;
+    }
+    public User(String firstName,String lastName,String email,String password){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User() {
+    }
+
+    public Integer getNoContentCreated() {
+        return noContentCreated;
+    }
+
+    public void setNoContentCreated(Integer noContentCreated) {
+        this.noContentCreated = noContentCreated;
+    }
+
+    public Integer getNoContentDeleted() {
+        return noContentDeleted;
+    }
+
+    public void setNoContentDeleted(Integer noContentDeleted) {
+        this.noContentDeleted = noContentDeleted;
+    }
+
+    public Integer getNoContentShared() {
+        return noContentShared;
+    }
+
+    public void setNoContentShared(Integer noContentShared) {
+        this.noContentShared = noContentShared;
+    }
 
     public Integer getId() {
         return id;
